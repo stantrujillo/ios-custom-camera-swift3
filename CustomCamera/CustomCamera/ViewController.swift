@@ -6,17 +6,18 @@
 //  Copyright © 2016 FAYA Corporation. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import AVFoundation
 
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
+{
 	@IBOutlet weak var imgOverlay: UIImageView!
 	@IBOutlet weak var btnCapture: UIButton!
 
 	let captureSession = AVCaptureSession()
-	let stillImageOutput = AVCaptureStillImageOutput()
+	let capturePhotoOutout = AVCapturePhotoOutput()
 	var previewLayer : AVCaptureVideoPreviewLayer?
 
 	var captureDevice : AVCaptureDevice?
@@ -27,17 +28,10 @@ class ViewController: UIViewController {
 	{
 		super.viewDidLoad()
 
-//		captureSession.sessionPreset = AVCaptureSessionPresetPhoto
-
-		for device in AVCaptureDevice.devices() as! [AVCaptureDevice]
+		if let device = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back)
 		{
-			if (device.position == AVCaptureDevicePosition.back)
-			{
-				print("self.view.frame: \(self.view.frame)")
-				captureDevice = device
-				beginSession()
-
-			}
+			captureDevice = device
+			beginSession()
 		}
 	}
 
@@ -68,11 +62,9 @@ class ViewController: UIViewController {
 		{
 			try captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
 
-			stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
-
-			if captureSession.canAddOutput(stillImageOutput)
+			if captureSession.canAddOutput(capturePhotoOutout)
 			{
-				captureSession.addOutput(stillImageOutput)
+				captureSession.addOutput(capturePhotoOutout)
 			}
 		}
 		catch
@@ -96,20 +88,31 @@ class ViewController: UIViewController {
 		self.view.addSubview(btnCapture)
 	}
 
+	func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?)
+	{
+		if let error = error
+		{
+			print(error.localizedDescription)
+		}
+
+		if let sampleBuffer = photoSampleBuffer, let previewBuffer = previewPhotoSampleBuffer, let dataImage = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: sampleBuffer, previewPhotoSampleBuffer: previewBuffer)
+		{
+			if let image = UIImage(data: dataImage)
+			{
+				UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+			}
+		}
+	}
+
 	func saveToCamera()
 	{
-		if let videoConnection = stillImageOutput.connection(withMediaType: AVMediaTypeVideo)
-		{
-			stillImageOutput.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (CMSampleBuffer, Error) in
-				if let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(CMSampleBuffer)
-				{
-					if let cameraImage = UIImage(data: imageData)
-					{
-						UIImageWriteToSavedPhotosAlbum(cameraImage, nil, nil, nil)
-					}
-				}
-			})
-		}
+		let settings = AVCapturePhotoSettings()
+		let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+		let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+		                     kCVPixelBufferWidthKey as String: 160,
+		                     kCVPixelBufferHeightKey as String: 160]
+		settings.previewPhotoFormat = previewFormat
+		self.capturePhotoOutout.capturePhoto(with: settings, delegate: self)
 	}
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70B796131E92734500C8AE4A /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 70B796121E92734500C8AE4A /* README.md */; };
 		C779EB451DA625B800BFF796 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C779EB441DA625B800BFF796 /* AppDelegate.swift */; };
 		C779EB471DA625B800BFF796 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C779EB461DA625B800BFF796 /* ViewController.swift */; };
 		C779EB4A1DA625B800BFF796 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C779EB481DA625B800BFF796 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		70B796121E92734500C8AE4A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C779EB411DA625B800BFF796 /* CustomCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C779EB441DA625B800BFF796 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C779EB461DA625B800BFF796 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		C779EB381DA625B800BFF796 = {
 			isa = PBXGroup;
 			children = (
+				70B796121E92734500C8AE4A /* README.md */,
 				C779EB431DA625B800BFF796 /* CustomCamera */,
 				C779EB581DA625B900BFF796 /* CustomCameraTests */,
 				C779EB631DA625B900BFF796 /* CustomCameraUITests */,
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70B796131E92734500C8AE4A /* README.md in Sources */,
 				C779EB471DA625B800BFF796 /* ViewController.swift in Sources */,
 				C779EB451DA625B800BFF796 /* AppDelegate.swift in Sources */,
 			);

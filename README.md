@@ -1,4 +1,8 @@
 # ios-custom-camera-swift3
+
+Simple customized camera view controller w/preview layer and overlays. (Heavily modified version of adarshvcdev's repo.)
+
+Uses Swift 3, but also the new iOS 10.x AVCapture API. 
+
 Sample code of iOS Custom Camera, Camera Overlay in Swift 3
 
-![alt tag](https://github.com/adarshvcdev/ios-custom-camera-swift3/blob/master/ScreenShots/IMG_0099.PNG)

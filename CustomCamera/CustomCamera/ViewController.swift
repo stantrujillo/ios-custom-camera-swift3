@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import Foundation
+
 
 class ViewController: UIViewController {
     
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
                 // Make sure this particular device supports video
                 if (device.hasMediaType(AVMediaTypeVideo)) {
                     // Finally check the position and confirm we've got the back camera
-                    if(device.position == AVCaptureDevicePosition.front) {
+                    if(device.position == AVCaptureDevicePosition.back) {
                         captureDevice = device
                         if captureDevice != nil {
                             print("Capture device found")
@@ -47,8 +47,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func actionCameraCapture(_ sender: AnyObject) {
-        
+    @IBAction func actionCameraCapture(_ sender: AnyObject) {        
         print("Camera button pressed")
         saveToCamera()
     }
@@ -98,9 +97,5 @@ class ViewController: UIViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }
 

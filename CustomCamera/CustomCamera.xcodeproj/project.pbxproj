@@ -193,7 +193,7 @@
 				TargetAttributes = {
 					C779EB401DA625B800BFF796 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 6DM9Y28J62;
+						DevelopmentTeam = ZF5D7CN5WY;
 						ProvisioningStyle = Automatic;
 					};
 					C779EB541DA625B900BFF796 = {
@@ -413,7 +413,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6DM9Y28J62;
+				DEVELOPMENT_TEAM = ZF5D7CN5WY;
 				INFOPLIST_FILE = CustomCamera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -427,7 +427,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 6DM9Y28J62;
+				DEVELOPMENT_TEAM = ZF5D7CN5WY;
 				INFOPLIST_FILE = CustomCamera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

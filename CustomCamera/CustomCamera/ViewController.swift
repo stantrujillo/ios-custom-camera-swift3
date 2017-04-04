@@ -47,17 +47,20 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 
 	fileprivate func fireTimer(timer: Timer)
 	{
-		print("tick")
+		print("timer tick...")
 	}
 
 	@IBAction func actionCameraCapture(_ sender: AnyObject)
 	{
-		print("Camera button pressed")
 		saveToCamera()
 	}
 
 	func beginSession()
 	{
+		// these are necessary to get full resolution 4:3 output
+		capturePhotoOutout.isHighResolutionCaptureEnabled = true
+		captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+
 		do
 		{
 			try captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
@@ -79,9 +82,8 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 		}
 
 		self.view.layer.addSublayer(previewLayer)
-		print("self.view.layer.frame: \(self.view.layer.frame)")
-		let frame = CGRect(x: 0, y: 20, width: self.view.layer.frame.width, height: self.view.layer.frame.height - 40)
-		previewLayer.frame = frame
+		previewLayer.frame = self.view.layer.frame
+
 		captureSession.startRunning()
 
 		self.view.addSubview(imgOverlay)
@@ -100,6 +102,7 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 			if let image = UIImage(data: dataImage)
 			{
 				UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+				print("image saved (\(image.size.width) x \(image.size.height))")
 			}
 		}
 	}
@@ -107,11 +110,16 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 	func saveToCamera()
 	{
 		let settings = AVCapturePhotoSettings()
-		let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
-		let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+
+		settings.isHighResolutionPhotoEnabled = true
+
+		// The preview is not used in this example, but it isn't clear how to suppress it...
+		settings.previewPhotoFormat = [
+			kCVPixelBufferPixelFormatTypeKey as String: settings.availablePreviewPhotoPixelFormatTypes.first!,
 		                     kCVPixelBufferWidthKey as String: 160,
-		                     kCVPixelBufferHeightKey as String: 160]
-		settings.previewPhotoFormat = previewFormat
+		                     kCVPixelBufferHeightKey as String: 160
+		]
+
 		self.capturePhotoOutout.capturePhoto(with: settings, delegate: self)
 	}
 }

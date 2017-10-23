@@ -1,4 +1,4 @@
-# ios-custom-camera-swift3
+# ios-custom-camera-swift4
 
 Simple customized camera view controller w/preview layer and overlays. (Credit to adarshvcdev for starting point.) 
 

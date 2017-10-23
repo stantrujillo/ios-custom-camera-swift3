@@ -2,8 +2,7 @@
 //  ViewController.swift
 //  CustomCamera
 //
-//  Created by Adarsh V C on 06/10/16.
-//  Copyright © 2016 FAYA Corporation. All rights reserved.
+//  Stan Trujillo on 23/10/17.
 //
 
 import Foundation
@@ -28,7 +27,7 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 	{
 		super.viewDidLoad()
 
-		if let device = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back)
+		if let device = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: .back)
 		{
 			captureDevice = device
 			beginSession()
@@ -59,11 +58,11 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 	{
 		// these are necessary to get full resolution 4:3 output
 		capturePhotoOutout.isHighResolutionCaptureEnabled = true
-		captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+		captureSession.sessionPreset = AVCaptureSession.Preset.photo
 
 		do
 		{
-			try captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
+			try captureSession.addInput(AVCaptureDeviceInput(device: captureDevice!))
 
 			if captureSession.canAddOutput(capturePhotoOutout)
 			{
@@ -75,11 +74,7 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 			print("error: \(error.localizedDescription)")
 		}
 
-		guard let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) else
-		{
-			print("no preview layer")
-			return
-		}
+		let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 
 		self.view.layer.addSublayer(previewLayer)
 		previewLayer.frame = self.view.layer.frame
@@ -90,7 +85,7 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 		self.view.addSubview(btnCapture)
 	}
 
-	func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?)
+	func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?)
 	{
 		if let error = error
 		{
@@ -106,7 +101,7 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 			}
 		}
 	}
-
+	
 	func saveToCamera()
 	{
 		let settings = AVCapturePhotoSettings()
@@ -116,8 +111,8 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate
 		// The preview is not used in this example, but it isn't clear how to suppress it...
 		settings.previewPhotoFormat = [
 			kCVPixelBufferPixelFormatTypeKey as String: settings.availablePreviewPhotoPixelFormatTypes.first!,
-		                     kCVPixelBufferWidthKey as String: 160,
-		                     kCVPixelBufferHeightKey as String: 160
+			kCVPixelBufferWidthKey as String: 160,
+			kCVPixelBufferHeightKey as String: 160
 		]
 
 		self.capturePhotoOutout.capturePhoto(with: settings, delegate: self)

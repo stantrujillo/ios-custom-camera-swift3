@@ -6,4 +6,6 @@ Simple customized camera view controller w/preview layer and overlays. (Credit t
 - Includes requred plist entries for camera access (fields should be modified prior to submission.)
 - Periodic timer for dynamic image analysis
 
+Oct. 2017 - Swift 4 update
+
 ![Screenshot](https://github.com/stantrujillo/ios-custom-camera-swift3/blob/master/IMG_1570.png)
